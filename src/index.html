@@ -16,7 +16,7 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-
+    <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
     <style>
       main {
         margin-top: 60px;
@@ -27,12 +27,17 @@
       }
 
       form {
+        padding-top: 50pt;
         width: 350px;
         margin-bottom: 10px;
       }
 
       ul {
         margin-bottom: 0px;
+      }
+
+      #completedTaskList {
+        padding-top: 8pt;
       }
 
       #completedTaskList .content {
@@ -64,7 +69,12 @@
             <ul id="taskList" class="list-unstyled">
               <div class="taskTemplate" class="checkbox" style="display: none">
                 <label>
-                  <input type="checkbox" />
+                  <select name="taskState">
+                    <option onClick='changeTaskState()' value="0">To Do</option>
+                    <option onClick='changeTaskState()' value="1">Doing</option>
+                    <option onClick='changeTaskState()' value="2">Testing</option>
+                    <option onClick='changeTaskState()' value="3">Done</option>
+                  </select>
                   <span class="content">Task content goes here...</span>
                 </label>
               </div>

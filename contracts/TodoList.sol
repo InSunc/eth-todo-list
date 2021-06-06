@@ -1,12 +1,15 @@
 pragma solidity ^0.5.0;
 
 contract TodoList {
+
+  enum TaskState { ToDo, Doing, Testing, Done }
+
   uint public taskCount = 0;
 
   struct Task {
     uint id;
     string content;
-    bool completed;
+    TaskState state;
   }
 
   mapping(uint => Task) public tasks;
@@ -14,12 +17,12 @@ contract TodoList {
   event TaskCreated(
     uint id,
     string content,
-    bool completed
+    TaskState state 
   );
 
-  event TaskCompleted(
+  event TaskStatusChanged(
     uint id,
-    bool completed
+    TaskState state
   );
 
   constructor() public {
@@ -28,15 +31,14 @@ contract TodoList {
 
   function createTask(string memory _content) public {
     taskCount ++;
-    tasks[taskCount] = Task(taskCount, _content, false);
-    emit TaskCreated(taskCount, _content, false);
+    tasks[taskCount] = Task(taskCount, _content, TaskState.ToDo);
+    emit TaskCreated(taskCount, _content, TaskState.ToDo);
   }
 
-  function toggleCompleted(uint _id) public {
+  function changeState(uint _id, TaskState _state) public {
     Task memory _task = tasks[_id];
-    _task.completed = !_task.completed;
+    _task.state = _state;
     tasks[_id] = _task;
-    emit TaskCompleted(_id, _task.completed);
+    emit TaskStatusChanged(_id, _task.state);
   }
-
 }
